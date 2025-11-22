@@ -18,15 +18,15 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mat_UrbanZombie6_Body
-    second: {fileID: 2100000, guid: 0c3668a830b436047b58d4f1d79e5b8c, type: 2}
+    second: {fileID: 2100000, guid: a54d532e738f3314cae7fa98bfd49eae, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mat_UrbanZombie6_Suit
-    second: {fileID: 2100000, guid: 06e4fa5f0a86f554d9b2f8aeb12d299a, type: 2}
+    second: {fileID: 2100000, guid: f270f779e9efb4449a5342445ff10fb3, type: 2}
   materials:
     materialImportMode: 1
-    materialName: 0
+    materialName: 2
     materialSearch: 1
     materialLocation: 1
   animations:
