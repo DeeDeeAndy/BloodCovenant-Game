@@ -4,12 +4,13 @@ using UnityEngine.UI;
 public class Door : MonoBehaviour
 {
 
-    bool trig, open;//trig-проверка входа выхода в триггер(игрок должен быть с тегом Player) open-закрыть и открыть дверь
-    public float smooth = 2.0f;//скорость вращения
-    public float DoorOpenAngle = 90.0f;//угол вращения 
+    bool trig, open;
+    public float smooth = 2.0f;
+    public float DoorOpenAngle = 90.0f;
     private Vector3 defaulRot;
     private Vector3 openRot;
-    public Text txt;//text 
+    public Text txt;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,11 +21,11 @@ public class Door : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (open)//открыть
+        if (open)
         {
             transform.eulerAngles = Vector3.Slerp(transform.eulerAngles, openRot, Time.deltaTime * smooth);
         }
-        else//закрыть
+        else
         {
             transform.eulerAngles = Vector3.Slerp(transform.eulerAngles, defaulRot, Time.deltaTime * smooth);
         }
