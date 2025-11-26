@@ -11,6 +11,12 @@ public class PlayerController : MonoBehaviour
     public float jumpHeight = 2.0f;
     public float gravity = -9.81f;
 
+    [Header("Health Settings")]
+    public float maxHealth = 100f;
+    private float currentHealth;
+    private bool isDead = false;
+    private bool isDying = false;
+
     private Animator animator;
     private CharacterController characterController;
     private Vector3 velocity;
@@ -22,31 +28,68 @@ public class PlayerController : MonoBehaviour
     private int isRunningHash;
     private int jumpHash;
     private int isGroundedHash;
+    private int meleeAttackHash;
+    private int shootHash;
+    private int isAimingHash;
+    private int hitHash;
+    private int dieHash;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
 
+        currentHealth = maxHealth;
+
         moveXHash = Animator.StringToHash("MoveX");
         moveYHash = Animator.StringToHash("MoveY");
         isRunningHash = Animator.StringToHash("IsRunning");
         jumpHash = Animator.StringToHash("Jump");
         isGroundedHash = Animator.StringToHash("IsGrounded");
+        meleeAttackHash = Animator.StringToHash("MeleeAttack");
+        shootHash = Animator.StringToHash("Shoot");
+        isAimingHash = Animator.StringToHash("IsAiming");
+        hitHash = Animator.StringToHash("Hit");
+        dieHash = Animator.StringToHash("Die");
     }
 
     void Update()
     {
+        if (isDead) return;
+
+        if (isDying)
+        {
+            HandleDying();
+            return;
+        }
+
         HandleMovement();
         HandleJump();
+        HandleCombat();
+        HandleTestInputs();
     }
 
-    void HandleJump()
+    void HandleDying()
     {
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        velocity.y += gravity * Time.deltaTime;
+        characterController.Move(velocity * Time.deltaTime);
+
+        if (characterController.isGrounded)
         {
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            animator.SetTrigger(jumpHash);
+            isDead = true;
+            animator.SetTrigger(dieHash);
+            animator.SetLayerWeight(1, 0f);
+            characterController.enabled = false;
+            Debug.Log("Player hit ground and died!");
+        }
+    }
+
+    void ApplyGravity()
+    {
+        if (!characterController.isGrounded)
+        {
+            velocity.y += gravity * Time.deltaTime;
+            characterController.Move(velocity * Time.deltaTime);
         }
     }
 
@@ -85,9 +128,122 @@ public class PlayerController : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
         characterController.Move(velocity * Time.deltaTime);
+    }
 
-        float animSpeedMultiplier = isRunning ? 2f : 1f;
-        animator.SetFloat(moveXHash, horizontal * animSpeedMultiplier, 0.1f, Time.deltaTime);
-        animator.SetFloat(moveYHash, vertical * animSpeedMultiplier, 0.1f, Time.deltaTime);
+    void HandleJump()
+    {
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            animator.SetTrigger(jumpHash);
+        }
+    }
+
+    void HandleCombat()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            bool currentAiming = animator.GetBool(isAimingHash);
+            animator.SetBool(isAimingHash, !currentAiming);
+            animator.SetLayerWeight(1, !currentAiming ? 1f : 0f);
+        }
+
+        bool isAiming = animator.GetBool(isAimingHash);
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (isAiming)
+            {
+                animator.SetTrigger(shootHash);
+            }
+            else
+            {
+                animator.SetTrigger(meleeAttackHash);
+            }
+        }
+    }
+
+    void HandleTestInputs()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            TakeDamage(20f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            Heal(20f);
+        }
+    }
+
+    public void OnShootProjectile()
+    {
+        Debug.Log("Crossbow fired!");
+    }
+
+    public void OnMeleeHit()
+    {
+        Debug.Log("Melee hit!");
+    }
+
+    public void TakeDamage(float damage)
+    {
+        if (isDead || isDying) return;
+
+        currentHealth -= damage;
+        currentHealth = Mathf.Max(currentHealth, 0f);
+
+        Debug.Log("Took " + damage + " damage! Health: " + currentHealth);
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+        else
+        {
+            animator.SetTrigger(hitHash);
+        }
+    }
+
+    public void Heal(float amount)
+    {
+        if (isDead || isDying) return;
+
+        currentHealth += amount;
+        currentHealth = Mathf.Min(currentHealth, maxHealth);
+
+        Debug.Log("Healed " + amount + "! Health: " + currentHealth);
+    }
+
+    void Die()
+    {
+        if (characterController.isGrounded)
+        {
+            isDead = true;
+            animator.SetTrigger(dieHash);
+            animator.SetLayerWeight(1, 0f);
+            characterController.enabled = false;
+            Debug.Log("Player died!");
+        }
+        else
+        {
+            isDying = true;
+            Debug.Log("Player is dying, falling to ground...");
+        }
+    }
+
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    public float GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public bool IsDead()
+    {
+        return isDead || isDying;
     }
 }
