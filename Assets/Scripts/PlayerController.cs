@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 velocity;
     private bool isGrounded;
     private bool isRunning;
+    private bool isSitting = false;
 
     private int moveXHash;
     private int moveYHash;
@@ -46,16 +47,17 @@ public class PlayerController : MonoBehaviour
     private int startSittingHash;
     private int standUpHash;
     private int sittingMoodHash;
-    private int sitClapHash;
     private int sitVictoryHash;
     private int sitThumbsUpHash;
-
-    private bool isSitting = false;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
 
         currentHealth = maxHealth;
 
@@ -74,7 +76,6 @@ public class PlayerController : MonoBehaviour
         startSittingHash = Animator.StringToHash("StartSitting");
         standUpHash = Animator.StringToHash("StandUp");
         sittingMoodHash = Animator.StringToHash("SittingMood");
-        sitClapHash = Animator.StringToHash("SitClap");
         sitVictoryHash = Animator.StringToHash("SitVictory");
         sitThumbsUpHash = Animator.StringToHash("SitThumbsUp");
     }
@@ -102,86 +103,13 @@ public class PlayerController : MonoBehaviour
         HandleTestInputs();
     }
 
-    void HandleSitting()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            isSitting = false;
-            animator.SetTrigger(standUpHash);
-            Debug.Log("Standing up...");
-            return;
-        }
-
-        float currentMood = animator.GetFloat(sittingMoodHash);
-
-        if (Input.GetKey(KeyCode.Q))
-        {
-            currentMood += Time.deltaTime * 0.5f;
-            animator.SetFloat(sittingMoodHash, Mathf.Clamp01(currentMood));
-        }
-
-        if (Input.GetKey(KeyCode.R))
-        {
-            currentMood -= Time.deltaTime * 0.5f;
-            animator.SetFloat(sittingMoodHash, Mathf.Clamp01(currentMood));
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha1)) animator.SetFloat(sittingMoodHash, 0f);
-        if (Input.GetKeyDown(KeyCode.Alpha2)) animator.SetFloat(sittingMoodHash, 0.5f);
-        if (Input.GetKeyDown(KeyCode.Alpha3)) animator.SetFloat(sittingMoodHash, 1f);
-        if (Input.GetKeyDown(KeyCode.Alpha4)) animator.SetTrigger(sitVictoryHash);
-        if (Input.GetKeyDown(KeyCode.Alpha5)) animator.SetTrigger(sitThumbsUpHash);
-    }
-
-    void HandleActions()
-    {
-        if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.C))
-        {
-            animator.SetTrigger(rollHash);
-        }
-
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            isSitting = true;
-            animator.SetTrigger(startSittingHash);
-            animator.SetFloat(sittingMoodHash, 0f);
-            Debug.Log("Sitting down...");
-        }
-    }
-
-    void HandleDying()
-    {
-        velocity.y += gravity * Time.deltaTime;
-        characterController.Move(velocity * Time.deltaTime);
-
-        if (characterController.isGrounded)
-        {
-            isDead = true;
-            animator.SetTrigger(dieHash);
-            animator.SetLayerWeight(1, 0f);
-            characterController.enabled = false;
-            Debug.Log("Player hit ground and died!");
-        }
-    }
-
-    void ApplyGravity()
-    {
-        if (!characterController.isGrounded)
-        {
-            velocity.y += gravity * Time.deltaTime;
-            characterController.Move(velocity * Time.deltaTime);
-        }
-    }
-
     void HandleMovement()
     {
         isGrounded = characterController.isGrounded;
         animator.SetBool(isGroundedHash, isGrounded);
 
         if (isGrounded && velocity.y < 0)
-        {
             velocity.y = -2f;
-        }
 
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
@@ -193,13 +121,10 @@ public class PlayerController : MonoBehaviour
         animator.SetBool(isRunningHash, isRunning);
 
         float currentSpeed = isRunning ? runSpeed : walkSpeed;
-
         Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
 
         if (moveDirection.magnitude > 1f)
-        {
             moveDirection.Normalize();
-        }
 
         characterController.Move(moveDirection * currentSpeed * Time.deltaTime);
 
@@ -228,53 +153,106 @@ public class PlayerController : MonoBehaviour
             animator.SetLayerWeight(1, !currentAiming ? 1f : 0f);
         }
 
-        bool isAiming = animator.GetBool(isAimingHash);
-
         if (Input.GetMouseButtonDown(0))
         {
-            if (isAiming)
-            {
+            if (animator.GetBool(isAimingHash))
                 animator.SetTrigger(shootHash);
-            }
             else
-            {
                 animator.SetTrigger(meleeAttackHash);
-            }
+        }
+    }
+
+    void HandleActions()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.C))
+            animator.SetTrigger(rollHash);
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            isSitting = true;
+            animator.SetTrigger(startSittingHash);
+            animator.SetFloat(sittingMoodHash, 0f);
+        }
+    }
+
+    void HandleSitting()
+    {
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            isSitting = false;
+            animator.SetTrigger(standUpHash);
+            return;
+        }
+
+        float currentMood = animator.GetFloat(sittingMoodHash);
+
+        if (Input.GetKey(KeyCode.Q))
+            animator.SetFloat(sittingMoodHash, Mathf.Clamp01(currentMood + Time.deltaTime * 0.5f));
+
+        if (Input.GetKey(KeyCode.R))
+            animator.SetFloat(sittingMoodHash, Mathf.Clamp01(currentMood - Time.deltaTime * 0.5f));
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) animator.SetFloat(sittingMoodHash, 0f);
+        if (Input.GetKeyDown(KeyCode.Alpha2)) animator.SetFloat(sittingMoodHash, 0.5f);
+        if (Input.GetKeyDown(KeyCode.Alpha3)) animator.SetFloat(sittingMoodHash, 1f);
+        if (Input.GetKeyDown(KeyCode.Alpha4)) animator.SetTrigger(sitVictoryHash);
+        if (Input.GetKeyDown(KeyCode.Alpha5)) animator.SetTrigger(sitThumbsUpHash);
+    }
+
+    void HandleDying()
+    {
+        velocity.y += gravity * Time.deltaTime;
+        characterController.Move(velocity * Time.deltaTime);
+
+        if (characterController.isGrounded)
+        {
+            isDead = true;
+            animator.SetTrigger(dieHash);
+            animator.SetLayerWeight(1, 0f);
+            characterController.enabled = false;
         }
     }
 
     void HandleTestInputs()
     {
         if (Input.GetKeyDown(KeyCode.T))
-        {
             TakeDamage(20f);
-        }
 
         if (Input.GetKeyDown(KeyCode.H))
-        {
             Heal(20f);
-        }
 
         if (Input.GetKeyDown(KeyCode.V))
-        {
             animator.SetTrigger(victoryHash);
-            Debug.Log("Victory!");
-        }
+    }
+
+    public void OnFootstep()
+    {
+        if (audioSource != null && footstepSound != null)
+            audioSource.PlayOneShot(footstepSound);
     }
 
     public void OnShootProjectile()
     {
-        Debug.Log("Crossbow fired!");
+        if (audioSource != null && shootSound != null)
+            audioSource.PlayOneShot(shootSound);
     }
 
     public void OnMeleeHit()
     {
-        Debug.Log("Melee hit!");
+        if (audioSource != null && meleeSound != null)
+            audioSource.PlayOneShot(meleeSound);
     }
 
     public void OnRollStart()
     {
-        Debug.Log("Roll!");
+        if (audioSource != null && rollSound != null)
+            audioSource.PlayOneShot(rollSound);
+    }
+
+    public void OnLand()
+    {
+        if (audioSource != null && landSound != null)
+            audioSource.PlayOneShot(landSound);
     }
 
     public void TakeDamage(float damage)
@@ -283,8 +261,7 @@ public class PlayerController : MonoBehaviour
 
         currentHealth -= damage;
         currentHealth = Mathf.Max(currentHealth, 0f);
-
-        Debug.Log("Took " + damage + " damage! Health: " + currentHealth);
+        Debug.Log($"Took {damage} damage! Health: {currentHealth}");
 
         if (isSitting)
         {
@@ -293,13 +270,9 @@ public class PlayerController : MonoBehaviour
         }
 
         if (currentHealth <= 0)
-        {
             Die();
-        }
         else
-        {
             animator.SetTrigger(hitHash);
-        }
     }
 
     public void Heal(float amount)
@@ -308,8 +281,7 @@ public class PlayerController : MonoBehaviour
 
         currentHealth += amount;
         currentHealth = Mathf.Min(currentHealth, maxHealth);
-
-        Debug.Log("Healed " + amount + "! Health: " + currentHealth);
+        Debug.Log($"Healed {amount}! Health: {currentHealth}");
     }
 
     void Die()
@@ -325,34 +297,17 @@ public class PlayerController : MonoBehaviour
         else
         {
             isDying = true;
-            Debug.Log("Player is dying, falling to ground...");
         }
     }
 
-    public float GetCurrentHealth()
-    {
-        return currentHealth;
-    }
-
-    public float GetMaxHealth()
-    {
-        return maxHealth;
-    }
-
-    public bool IsDead()
-    {
-        return isDead || isDying;
-    }
+    public float GetCurrentHealth() => currentHealth;
+    public float GetMaxHealth() => maxHealth;
+    public bool IsDead() => isDead || isDying;
+    public bool IsSitting() => isSitting;
 
     public void PlayVictory()
     {
         if (isDead || isDying) return;
         animator.SetTrigger(victoryHash);
-        Debug.Log("Victory!");
-    }
-
-    public bool IsSitting()
-    {
-        return isSitting;
     }
 }
