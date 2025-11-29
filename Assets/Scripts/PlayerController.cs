@@ -19,10 +19,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("Audio")]
     public AudioClip footstepSound;
-    public AudioClip shootSound;
-    public AudioClip meleeSound;
     public AudioClip rollSound;
     public AudioClip landSound;
+    public AudioClip[] hurtSounds;
+    public AudioClip deathSound;
     private AudioSource audioSource;
 
     private Animator animator;
@@ -225,22 +225,11 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger(victoryHash);
     }
 
+    // Animation Event Methods
     public void OnFootstep()
     {
         if (audioSource != null && footstepSound != null)
             audioSource.PlayOneShot(footstepSound);
-    }
-
-    public void OnShootProjectile()
-    {
-        if (audioSource != null && shootSound != null)
-            audioSource.PlayOneShot(shootSound);
-    }
-
-    public void OnMeleeHit()
-    {
-        if (audioSource != null && meleeSound != null)
-            audioSource.PlayOneShot(meleeSound);
     }
 
     public void OnRollStart()
@@ -255,6 +244,22 @@ public class PlayerController : MonoBehaviour
             audioSource.PlayOneShot(landSound);
     }
 
+    void PlayRandomHurtSound()
+    {
+        if (audioSource != null && hurtSounds.Length > 0)
+        {
+            AudioClip clip = hurtSounds[Random.Range(0, hurtSounds.Length)];
+            audioSource.PlayOneShot(clip);
+        }
+    }
+
+    void PlayDeathSound()
+    {
+        if (audioSource != null && deathSound != null)
+            audioSource.PlayOneShot(deathSound);
+    }
+
+    // Public Methods
     public void TakeDamage(float damage)
     {
         if (isDead || isDying) return;
@@ -272,7 +277,10 @@ public class PlayerController : MonoBehaviour
         if (currentHealth <= 0)
             Die();
         else
+        {
             animator.SetTrigger(hitHash);
+            PlayRandomHurtSound();
+        }
     }
 
     public void Heal(float amount)
@@ -292,6 +300,7 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger(dieHash);
             animator.SetLayerWeight(1, 0f);
             characterController.enabled = false;
+            PlayDeathSound();
             Debug.Log("Player died!");
         }
         else

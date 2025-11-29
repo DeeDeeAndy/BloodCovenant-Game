@@ -37,6 +37,9 @@ public class PlayerCombat : MonoBehaviour
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
         if (meleePoint == null)
             meleePoint = transform;
 
@@ -46,6 +49,8 @@ public class PlayerCombat : MonoBehaviour
 
     public void OnMeleeHit()
     {
+        Debug.Log("OnMeleeHit called!");
+
         Collider[] hitEnemies = Physics.OverlapSphere(meleePoint.position, meleeRadius, enemyLayer);
 
         bool hitSomething = false;
@@ -58,6 +63,7 @@ public class PlayerCombat : MonoBehaviour
                 float damage = meleeDamage * (1f + (comboCount * 0.1f));
                 enemyScript.TakeDamage(damage);
                 hitSomething = true;
+                Debug.Log("Hit enemy: " + enemy.name);
             }
         }
 
@@ -86,6 +92,8 @@ public class PlayerCombat : MonoBehaviour
 
     public void OnShootProjectile()
     {
+        Debug.Log("OnShootProjectile called!");
+
         if (firePoint == null)
             firePoint = transform;
 
@@ -103,6 +111,8 @@ public class PlayerCombat : MonoBehaviour
 
         if (Physics.Raycast(firePoint.position, shootDirection, out hit, rangedRange, shootableLayers))
         {
+            Debug.Log("Shot hit: " + hit.collider.name);
+
             Enemy enemy = hit.collider.GetComponent<Enemy>();
             if (enemy != null && !enemy.IsDead())
             {

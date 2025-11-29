@@ -6,6 +6,19 @@ public class Enemy : MonoBehaviour
     [Header("Data")]
     public EnemyData enemyData;
 
+    [Header("Audio")]
+    public AudioClip[] idleSounds;
+    public AudioClip[] attackSounds;
+    public AudioClip[] hitSounds;
+    public AudioClip[] deathSounds;
+    public AudioClip[] footstepSounds;
+    public AudioClip screamSound;
+    [Range(0f, 1f)] public float idleSoundChance = 0.3f;
+    public float minIdleSoundInterval = 3f;
+    public float maxIdleSoundInterval = 8f;
+    private AudioSource audioSource;
+    private float nextIdleSoundTime;
+
     private float currentHealth;
     private Transform player;
     private NavMeshAgent agent;
@@ -42,6 +55,13 @@ public class Enemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+
+        audioSource.spatialBlend = 1f;
+        audioSource.maxDistance = 20f;
 
         speedHash = Animator.StringToHash("Speed");
         attackHash = Animator.StringToHash("Attack");
@@ -69,6 +89,7 @@ public class Enemy : MonoBehaviour
 
         screamInterval = Random.Range(8f, 15f);
         lastScreamTime = Time.time;
+        nextIdleSoundTime = Time.time + Random.Range(minIdleSoundInterval, maxIdleSoundInterval);
 
         if (agent != null)
         {
@@ -114,6 +135,7 @@ public class Enemy : MonoBehaviour
         }
 
         TryScream();
+        TryIdleSound();
     }
 
     void TryScream()
@@ -125,7 +147,44 @@ public class Enemy : MonoBehaviour
             lastScreamTime = Time.time;
             screamInterval = Random.Range(8f, 15f);
             animator.SetTrigger(screamHash);
+            PlayScreamSound();
         }
+    }
+
+    void TryIdleSound()
+    {
+        if (Time.time >= nextIdleSoundTime && idleSounds.Length > 0)
+        {
+            if (Random.value <= idleSoundChance)
+            {
+                PlayRandomSound(idleSounds);
+            }
+            nextIdleSoundTime = Time.time + Random.Range(minIdleSoundInterval, maxIdleSoundInterval);
+        }
+    }
+
+    void PlayRandomSound(AudioClip[] clips)
+    {
+        if (clips.Length == 0 || audioSource == null) return;
+        AudioClip clip = clips[Random.Range(0, clips.Length)];
+        audioSource.PlayOneShot(clip);
+    }
+
+    void PlayScreamSound()
+    {
+        if (screamSound != null && audioSource != null)
+            audioSource.PlayOneShot(screamSound);
+    }
+
+    // Animation Event Methods - Call these from animations
+    public void OnFootstep()
+    {
+        PlayRandomSound(footstepSounds);
+    }
+
+    public void OnAttackSound()
+    {
+        PlayRandomSound(attackSounds);
     }
 
     void TryAttack()
@@ -153,6 +212,8 @@ public class Enemy : MonoBehaviour
                 animator.SetTrigger(attackHash);
         }
 
+        PlayRandomSound(attackSounds);
+
         PlayerController playerController = player.GetComponent<PlayerController>();
         if (playerController != null)
         {
@@ -168,6 +229,8 @@ public class Enemy : MonoBehaviour
 
         if (animator != null && hitHash != 0)
             animator.SetTrigger(hitHash);
+
+        PlayRandomSound(hitSounds);
 
         if (isCrawling && enemyData.canStandUp && hasStandUp)
         {
@@ -201,6 +264,8 @@ public class Enemy : MonoBehaviour
 
         if (animator != null)
             animator.SetTrigger(dieHash);
+
+        PlayRandomSound(deathSounds);
 
         if (agent != null)
             agent.enabled = false;
