@@ -270,6 +270,9 @@ public class Enemy : MonoBehaviour
         if (agent != null)
             agent.enabled = false;
 
+        if (WaveManager.Instance != null)
+            WaveManager.Instance.OnEnemyDeath();
+
         Destroy(gameObject, 2f);
     }
 

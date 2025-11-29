@@ -225,7 +225,7 @@ public class PlayerController : MonoBehaviour
             animator.SetTrigger(victoryHash);
     }
 
-    // Animation Event Methods
+
     public void OnFootstep()
     {
         if (audioSource != null && footstepSound != null)

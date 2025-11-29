@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f28f6e6ed36c094e89ca9faeff9f913, type: 3}
+  m_Name: Wave6_Data
+  m_EditorClassIdentifier: 
+  waveName: Hour 6 - Corrupted Core
+  enemies:
+  - enemyPrefab: {fileID: 1170429071744274327, guid: 285c5652e4dbe44448f9da0d08bbfc4d, type: 3}
+    count: 2
+  - enemyPrefab: {fileID: 1190798181937598247, guid: 56be283534c034548a03781609a54c78, type: 3}
+    count: 2
+  - enemyPrefab: {fileID: 4734095612451134161, guid: 0301f9cfc334c9c4bb18570e1d158e15, type: 3}
+    count: 2
+  - enemyPrefab: {fileID: 1843062605311822483, guid: 447cca9798f6ee843bce910400eb8a1c, type: 3}
+    count: 3
+  - enemyPrefab: {fileID: 8205142094298653189, guid: 78b40559fd6e43241b17d43a3bfdc6ec, type: 3}
+    count: 2
+  - enemyPrefab: {fileID: 2881134536737035461, guid: ae11a22bf69cad146bfa2436ad73f609, type: 3}
+    count: 3
