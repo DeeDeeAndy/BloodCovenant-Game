@@ -28,72 +28,72 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: 2_meshes_Merge_0_Diffuse
-    second: {fileID: 2800000, guid: 6c5dfac1d471ea64096d9d8a69889c90, type: 3}
+    second: {fileID: 2800000, guid: 1a6b86f6a6a09a5488f0d81fdc4fa6ff, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: 2_meshes_Merge_0_Normal
-    second: {fileID: 2800000, guid: 5971062ae8de3fe43ac62d39eb497140, type: 3}
+    second: {fileID: 2800000, guid: 1f6df256d5dfa4a47b92f6c59ff0d725, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: 2_meshes_Merge_0_Opacity
-    second: {fileID: 2800000, guid: f3d38fd0a362679438ae68045a1316ac, type: 3}
+    second: {fileID: 2800000, guid: 0e5b161324adfe5469869a2a574c9a0e, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: 2_meshes_Merge_0_Specular
-    second: {fileID: 2800000, guid: a7c97e76a8eeaba4c903adb0b060a82e, type: 3}
+    second: {fileID: 2800000, guid: ffdcd992a9f39ed45a7dc9de0539c747, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: 3_meshes_Merge_Diffuse
-    second: {fileID: 2800000, guid: 0c45ef230ea7bd942904db46414fae6e, type: 3}
+    second: {fileID: 2800000, guid: 66e710a30c9200249a03414fde80ee9c, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: 3_meshes_Merge_Normal
-    second: {fileID: 2800000, guid: d12e046674675f94a8cfc555fb14b6e1, type: 3}
+    second: {fileID: 2800000, guid: 361ca07972245ad4e8dfb5853f313bbd, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: 3_meshes_Merge_Opacity
-    second: {fileID: 2800000, guid: 4ca711bd8a22d4d41beb3b87ddcbaefd, type: 3}
+    second: {fileID: 2800000, guid: 3fb93a22039fb0346885cce58a6e901e, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: 4_meshes_Merge_Diffuse
-    second: {fileID: 2800000, guid: a655389b68489df4b99aa2bcc8ab6716, type: 3}
+    second: {fileID: 2800000, guid: 2d0789261779b554588e553a6c8bc9c9, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: 4_meshes_Merge_Normal
-    second: {fileID: 2800000, guid: efcd2c1cec92f5347b5f30d11af23e25, type: 3}
+    second: {fileID: 2800000, guid: 4b72ff8b4257efd4fa5d13666e146b0d, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: 4_meshes_Merge_Opacity
-    second: {fileID: 2800000, guid: 86770ac16aaa79940bd248c46bedc78f, type: 3}
+    second: {fileID: 2800000, guid: 4f42f9511d40a014eb4449927d11b49a, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: 6_meshes_Merge_Diffuse
-    second: {fileID: 2800000, guid: 72a4fa732bbbafd42a11c0871c9f290a, type: 3}
+    second: {fileID: 2800000, guid: d85be362aa897ec4eb1696f5d8ee7ba1, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: 6_meshes_Merge_Normal
-    second: {fileID: 2800000, guid: 0e2d91732d7a08f40aa283c36a43aae7, type: 3}
+    second: {fileID: 2800000, guid: c21be479a0d9aef45bec838df21241f2, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: 6_meshes_Merge_Opacity
-    second: {fileID: 2800000, guid: 673d1d61cf7daa14b987d078a09ca08c, type: 3}
+    second: {fileID: 2800000, guid: fd74a7c8987f2d347ba99d21f49a7b0d, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: 6_meshes_Merge_Specular
-    second: {fileID: 2800000, guid: 12014fd98603867498d033e04c574e54, type: 3}
+    second: {fileID: 2800000, guid: 3b36b5ddd7e7eef45b56264fc30352ce, type: 3}
   materials:
     materialImportMode: 1
     materialName: 0

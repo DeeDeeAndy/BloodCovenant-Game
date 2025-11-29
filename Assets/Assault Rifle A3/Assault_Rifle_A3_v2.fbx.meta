@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: 63f4a30f5731329418b381f3df766a4e
+AssetOrigin:
+  serializedVersion: 1
+  productId: 2107
+  packageName: Assault Rifle A3
+  packageVersion: 2.2
+  assetPath: Assets/Assault Rifle A3/Assault_Rifle_A3_v2.fbx
+  uploadId: 9036
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable:
@@ -24,7 +31,17 @@ ModelImporter:
   - first:
       43: 4300012
     second: body
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gunmetal
+    second: {fileID: 2100000, guid: c4cf2dba6c2470b4abb2d10e986c8bee, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: scope_mat1
+    second: {fileID: 2100000, guid: 07cd7825808a02b4587d7aa745a7cc85, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
@@ -126,10 +143,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 2107
-  packageName: Assault Rifle A3
-  packageVersion: 2.2
-  assetPath: Assets/Assault Rifle A3/Assault_Rifle_A3_v2.fbx
-  uploadId: 9036
