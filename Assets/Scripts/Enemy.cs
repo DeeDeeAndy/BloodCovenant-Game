@@ -273,6 +273,9 @@ public class Enemy : MonoBehaviour
         if (ScoreManager.Instance != null)
             ScoreManager.Instance.AddScore(enemyData.scoreValue);
 
+        if (UpgradeManager.Instance != null)
+            UpgradeManager.Instance.AddCurrency(enemyData.scoreValue / 10);
+
         if (PowerUpSpawner.Instance != null)
             PowerUpSpawner.Instance.TrySpawnPowerUp(transform.position, enemyData.powerUpDropChance);
 

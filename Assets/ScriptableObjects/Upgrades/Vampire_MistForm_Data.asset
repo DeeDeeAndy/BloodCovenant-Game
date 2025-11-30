@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f86ada2b2e8e7c94fa3cfe3c449d1d61, type: 3}
+  m_Name: Vampire_MistForm_Data
+  m_EditorClassIdentifier: 
+  upgradeName: Mist Form
+  description: Take reduced damage from all sources
+  icon: {fileID: 0}
+  path: 0
+  cost: 300
+  upgradeType: 8
+  effectValue: 15
+  requiredLevel: 1
+  prerequisite: {fileID: 11400000, guid: 9d378ce90a0cc2449889b8e1f5e376f0, type: 2}
