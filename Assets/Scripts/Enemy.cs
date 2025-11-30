@@ -270,6 +270,12 @@ public class Enemy : MonoBehaviour
         if (agent != null)
             agent.enabled = false;
 
+        if (ScoreManager.Instance != null)
+            ScoreManager.Instance.AddScore(enemyData.scoreValue);
+
+        if (PowerUpSpawner.Instance != null)
+            PowerUpSpawner.Instance.TrySpawnPowerUp(transform.position, enemyData.powerUpDropChance);
+
         if (WaveManager.Instance != null)
             WaveManager.Instance.OnEnemyDeath();
 
