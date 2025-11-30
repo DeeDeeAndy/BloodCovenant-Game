@@ -1,11 +1,24 @@
 fileFormatVersion: 2
 guid: 307fdda90af4de34ea64d387ae1bdcb4
+AssetOrigin:
+  serializedVersion: 1
+  productId: 318372
+  packageName: Herbal & Medic Pack
+  packageVersion: 1.1.0
+  assetPath: Assets/Hash Game studios/Herbal & Medic Pack/Meshes/Medic pack/Medic
+    pack 1.fbx
+  uploadId: 755257
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: No Name
+    second: {fileID: 2100000, guid: 36758b6cf252989419ce2f784ad7a021, type: 2}
   materials:
-    materialImportMode: 0
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -97,7 +110,7 @@ ModelImporter:
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 0
+  animationType: 1
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
@@ -107,11 +120,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 318372
-  packageName: Herbal & Medic Pack
-  packageVersion: 1.1.0
-  assetPath: Assets/Hash Game studios/Herbal & Medic Pack/Meshes/Medic pack/Medic
-    pack 1.fbx
-  uploadId: 755257

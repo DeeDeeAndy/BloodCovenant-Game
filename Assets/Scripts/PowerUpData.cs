@@ -10,15 +10,20 @@ public class PowerUpData : ScriptableObject
     public Color glowColor = Color.yellow;
     public GameObject visualEffectPrefab;
     public AudioClip pickupSound;
+
+    [Header("Lore Collectible (Only for LorePickup type)")]
+    [TextArea(3, 10)]
+    public string loreText;
+    public AudioClip loreAudioClip;
 }
 
 public enum PowerUpType
 {
-    HolyWater, 
-    BloodFrenzy, 
-    SpectralInfusion,
-    LunarEssence, 
-    HealthPack,    
-    DamageBoost,   
-    SpeedBoost     
+    HolyWater,
+    BloodFrenzy,
+    LorePickup,
+    LunarEssence,
+    HealthPack,
+    DamageBoost,
+    SpeedBoost
 }

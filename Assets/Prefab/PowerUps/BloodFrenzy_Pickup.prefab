@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7281127450134019121
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 945d10f65c93b40429efef9bb9f68831, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.017
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 945d10f65c93b40429efef9bb9f68831, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 945d10f65c93b40429efef9bb9f68831, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 945d10f65c93b40429efef9bb9f68831, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 945d10f65c93b40429efef9bb9f68831, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 945d10f65c93b40429efef9bb9f68831, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 945d10f65c93b40429efef9bb9f68831, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 945d10f65c93b40429efef9bb9f68831, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 945d10f65c93b40429efef9bb9f68831, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 945d10f65c93b40429efef9bb9f68831, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 945d10f65c93b40429efef9bb9f68831, type: 3}
+      propertyPath: m_Name
+      value: BloodFrenzy
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 945d10f65c93b40429efef9bb9f68831, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1982945415025580562}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 945d10f65c93b40429efef9bb9f68831, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6436356254086360752}
+  m_SourcePrefab: {fileID: 100100000, guid: 945d10f65c93b40429efef9bb9f68831, type: 3}
+--- !u!1 &7623093367334256992 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 945d10f65c93b40429efef9bb9f68831, type: 3}
+  m_PrefabInstance: {fileID: 7281127450134019121}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1982945415025580562
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7623093367334256992}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.027224636, y: 0.039286863, z: 0.17422119}
+  m_Center: {x: 0.0022309767, y: 0.0030181091, z: -0.0022281818}
+--- !u!114 &6436356254086360752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7623093367334256992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3ac1720cec89904aa91cc6c55c84468, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpData: {fileID: 11400000, guid: e32c8a99df5368242bb1ab916029483b, type: 2}
+  rotationSpeed: 50
+  bobSpeed: 2
+  bobHeight: 0.5

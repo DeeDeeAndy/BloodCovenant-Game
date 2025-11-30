@@ -6,7 +6,6 @@ public class PlayerBuffs : MonoBehaviour
 {
     private PlayerController playerController;
     private PlayerCombat playerCombat;
-
     private Dictionary<PowerUpType, Coroutine> activeBuffs = new Dictionary<PowerUpType, Coroutine>();
 
     private float baseWalkSpeed;
@@ -15,7 +14,6 @@ public class PlayerBuffs : MonoBehaviour
     private float baseRangedDamage;
 
     public bool IsInvincible { get; private set; }
-    public bool IsIntangible { get; private set; }
 
     void Start()
     {
@@ -30,6 +28,12 @@ public class PlayerBuffs : MonoBehaviour
 
     public void ApplyPowerUp(PowerUpData powerUp)
     {
+        if (powerUp.type == PowerUpType.LorePickup)
+        {
+            DisplayLore(powerUp);
+            return;
+        }
+
         if (activeBuffs.ContainsKey(powerUp.type))
         {
             StopCoroutine(activeBuffs[powerUp.type]);
@@ -45,9 +49,7 @@ public class PlayerBuffs : MonoBehaviour
     IEnumerator PowerUpRoutine(PowerUpData powerUp)
     {
         ApplyEffect(powerUp, true);
-
         yield return new WaitForSeconds(powerUp.duration);
-
         ApplyEffect(powerUp, false);
         activeBuffs.Remove(powerUp.type);
 
@@ -68,10 +70,6 @@ public class PlayerBuffs : MonoBehaviour
                 playerCombat.meleeDamage = baseMeleeDamage * multiplier;
                 playerCombat.rangedDamage = baseRangedDamage * multiplier;
                 if (apply) StartCoroutine(BloodFrenzyDrain(powerUp.duration));
-                break;
-
-            case PowerUpType.SpectralInfusion:
-                IsIntangible = apply;
                 break;
 
             case PowerUpType.LunarEssence:
@@ -101,6 +99,14 @@ public class PlayerBuffs : MonoBehaviour
             playerCombat.meleeDamage = baseMeleeDamage;
             playerCombat.rangedDamage = baseRangedDamage;
         }
+    }
+
+    void DisplayLore(PowerUpData powerUp)
+    {
+        if (LoreManager.Instance != null)
+            LoreManager.Instance.ShowLore(powerUp.loreText, powerUp.loreAudioClip);
+        else
+            Debug.Log($"LORE: {powerUp.loreText}");
     }
 
     IEnumerator BloodFrenzyDrain(float duration)
